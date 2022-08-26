@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./small_business
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./small_business/:/usr/src/small_business/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=small_business
+      - POSTGRES_PASSWORD=small_business
+      - POSTGRES_DB=small_business_dev
+
+volumes:
+  postgres_data:
