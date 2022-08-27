@@ -17,5 +17,6 @@ def set_occupancy(sender, instance, action, **kwargs):
 
 @receiver(pre_save, sender=Event)
 def check_occupancy(sender, instance, *args, **kwargs):
-    if instance.event_participants.count() > instance.room.capacity:
-        return Response("Room out of capacity.", status.HTTP_400_BAD_REQUEST)
+    if instance.id:
+        if instance.event_participants.count() > instance.room.capacity:
+            return Response("Room out of capacity.", status.HTTP_400_BAD_REQUEST)

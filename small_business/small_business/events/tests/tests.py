@@ -46,7 +46,7 @@ class EventAPITest(APITestCase):
                            'Cum sociis natoque penatibus et ma',
             'event_type': 'private',
             'start_at': '2022-01-01T12:20:30+03:00',
-            'end_at': '2022-01-01T12:20:30+03:00',
+            'end_at': '2022-01-01T23:20:30+03:00',
             'room': 2,
         }
         response = self.client.post(self.api_url, data, format='json')
@@ -70,7 +70,7 @@ class EventAPITest(APITestCase):
                            'Cum sociis natoque penatibus et ma',
             'event_type': 'private',
             'start_at': '2022-12-01T12:20:30+03:00',
-            'end_at': '2022-12-01T12:20:30+03:00',
+            'end_at': '2022-12-01T23:20:30+03:00',
             'room': 2,
         }
         response = self.client.post(self.api_url, data, format='json')

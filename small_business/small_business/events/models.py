@@ -47,9 +47,10 @@ class Event(Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if self.event_participants.count() > self.room.capacity:
-            raise ValidationError("Room full occupancy was reached.", code=200)
-        super(Event, self).save(*args, **kwargs)
+        if self.id:
+            if self.event_participants.count() > self.room.capacity:
+                raise ValidationError("Room full occupancy was reached.", code=200)
+            super(Event, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = (

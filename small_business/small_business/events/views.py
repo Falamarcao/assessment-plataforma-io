@@ -49,11 +49,7 @@ class EventViewSet(ModelViewSet):
         groups = self.request.user.groups.values_list('name', flat=True)
         if 'customers' in groups:
             instance = self.get_object()
-            print('instance.owner.id----------------------------------')
-            print(instance.owner.id)
-            print('request.user.id----------------------------------')
-            print(request.user.id)
             if instance.owner.id != request.user.id:
                 return Response("Customers can only cancel their own events.", status.HTTP_401_UNAUTHORIZED)
 
-        super(EventViewSet, self).destroy(*args, **kwargs)
+        return super(EventViewSet, self).destroy(request, *args, **kwargs)
