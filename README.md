@@ -53,14 +53,18 @@ Usually we put migrations on version control when we have a older project or a p
 
 ## Building and Running Development environment (DEV)
 * ### BUILD
-  > docker-compose build --no-cache
+  ````commandline  
+  docker-compose build --no-cache
+  ````
 
 * ### RUN
-  > docker-compose up -d
-
+  ````commandline
+  docker-compose up -d
+  ````
 * ### STOP
-  > docker-compose down -v
-
+  ````commandline
+  docker-compose down -v
+  ````
 * ### OPEN http://localhost:8000/
 
 * ### SUPER USER & DJANGO ADMIN
@@ -73,12 +77,18 @@ Usually we put migrations on version control when we have a older project or a p
 
 ## Building and Running production-ready environment (PROD)
 * ### If you have DEV running first take it down.
-  > docker-compose down -v
+  ````commandline
+  docker-compose down -v
+  ````
 * ### And then BUILD & RUN
-  > docker-compose -f docker-compose.prod.yml up -d --build
+  ````commandline
+  docker-compose -f docker-compose.prod.yml up -d --build
+  ````
 * ### FINALLY OPEN http://localhost:1337/
 * ### STOP
-  > docker-compose -f docker-compose.prod.yml down -v
+  ````commandline
+  docker-compose -f docker-compose.prod.yml down -v
+  ````
 
 * ### USERS & DJANGO ADMIN
   ```
