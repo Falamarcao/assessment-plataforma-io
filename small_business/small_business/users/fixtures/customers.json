@@ -1,0 +1,42 @@
+[
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "username": "John Lennon",
+      "email": "john.lennon@beatles.com",
+      "password": "pbkdf2_sha256$320000$9Mzws8YZ83Ku2nfd21Sljr$0uRI3n/OKTO2Rr+ZY+Ll86iZ4nUhtHoccDhX+bj6+9M=",
+      "groups": [2]
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "username": "Paul McCartney",
+      "email": "paul.mcCartney@beatles.com",
+      "password": "pbkdf2_sha256$320000$9Mzws8YZ83Ku2nfd21Sljr$0uRI3n/OKTO2Rr+ZY+Ll86iZ4nUhtHoccDhX+bj6+9M=",
+      "groups": [2]
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "username": "George Harrison",
+      "email": "george.harrison@beatles.com",
+      "password": "pbkdf2_sha256$320000$9Mzws8YZ83Ku2nfd21Sljr$0uRI3n/OKTO2Rr+ZY+Ll86iZ4nUhtHoccDhX+bj6+9M=",
+      "groups": [2]
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "username": "Ringo Starr",
+      "email": "ringo.starr@beatles.com",
+      "password": "pbkdf2_sha256$320000$9Mzws8YZ83Ku2nfd21Sljr$0uRI3n/OKTO2Rr+ZY+Ll86iZ4nUhtHoccDhX+bj6+9M=",
+      "groups": [2]
+    }
+  }
+]

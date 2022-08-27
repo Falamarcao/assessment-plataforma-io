@@ -1,0 +1,13 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "username": "staff",
+      "email": "staff@small_business.com",
+      "password": "pbkdf2_sha256$320000$9Mzws8YZ83Ku2nfd21Sljr$0uRI3n/OKTO2Rr+ZY+Ll86iZ4nUhtHoccDhX+bj6+9M=",
+      "is_staff": true,
+      "groups": [1]
+    }
+  }
+]

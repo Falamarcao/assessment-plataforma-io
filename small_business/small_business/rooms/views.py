@@ -1,9 +1,9 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.viewsets import ModelViewSet
 from .serializers import RoomSerializer
 from .models import Room
 
 
-class RoomViewSet(ReadOnlyModelViewSet):
+class RoomViewSet(ModelViewSet):
     """
     API endpoint that allows...
     """

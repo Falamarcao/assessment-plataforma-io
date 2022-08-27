@@ -20,7 +20,12 @@ if [ ! -e $CONTAINER_ALREADY_STARTED ]; then
     python manage.py makemigrations
     python manage.py migrate --noinput
     python manage.py collectstatic
-    #python manage.py loaddata users.json posts.json reposts.json quote-postings.json
+
+    # CREATE GROUPS
+    python manage.py create_groups
+
+    # ADD DATA - fixtures
+    python manage.py loaddata customers.json staff.json rooms.json events.json
 
     # CREATE SUPER USER
     # Look at .env.prod file to setup username and password

@@ -1,0 +1,72 @@
+[
+  {
+    "model": "events.event",
+    "pk": 1,
+    "fields": {
+      "owner": 2,
+      "name": "Origami Crane Wedding Planners",
+      "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
+      "event_type": "private",
+      "start_at": "2021-01-01T12:20:30+03:00",
+      "end_at": "2021-01-01T23:20:30+03:00",
+      "room": 1,
+      "event_participants": [2,3,4]
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 2,
+    "fields": {
+      "owner": 3,
+      "name": "Treasure Hunts",
+      "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
+      "event_type": "public",
+      "start_at": "2021-02-01T12:20:30+03:00",
+      "end_at": "2021-02-01T23:20:30+03:00",
+      "room": 2,
+      "event_participants": [2,3,4]
+    }
+  },
+    {
+    "model": "events.event",
+    "pk": 3,
+    "fields": {
+      "owner": 4,
+      "name": "Evening Unfolds Events",
+      "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
+      "event_type": "public",
+      "start_at": "2021-03-01T12:20:30+03:00",
+      "end_at": "2021-03-01T23:20:30+03:00",
+      "room": 3,
+      "event_participants": [2,3]
+    }
+  },
+    {
+    "model": "events.event",
+    "pk": 4,
+    "fields": {
+      "owner": 5,
+      "name": "FunTime",
+      "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
+      "event_type": "private",
+      "start_at": "2021-04-01T12:20:30+03:00",
+      "end_at": "2021-04-01T23:20:30+03:00",
+      "room": 4,
+      "event_participants": [5]
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 5,
+    "fields": {
+      "owner": 2,
+      "name": "Origami Crane Wedding Planners",
+      "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et ma",
+      "event_type": "private",
+      "start_at": "2022-02-01T12:20:30+03:00",
+      "end_at": "2022-02-01T23:20:30+03:00",
+      "room": 1,
+      "event_participants": [2,3,4]
+    }
+  }
+]

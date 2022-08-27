@@ -14,14 +14,19 @@ fi
 python manage.py flush --no-input
 python manage.py makemigrations
 python manage.py migrate --noinput
-#python manage.py loaddata users.json posts.json reposts.json quote-postings.json
+
+# CREATE GROUPS
+python manage.py create_groups
+
+# ADD DATA - fixtures
+python manage.py loaddata customers.json staff.json rooms.json events.json
+
+# RUN TESTS EVERYTIME
+python manage.py test small_business.rooms small_business.events &> test.log
 
 # CREATE SUPER USER
 echo "Creating Super User..."
 python manage.py createsuperuser --noinput --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL
-
-# RUN TESTS EVERYTIME
-#python manage.py test small_business.users small_business.posts &> test.log
 
 history -c
 

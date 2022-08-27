@@ -4,4 +4,5 @@ from .models import Event
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ('occupancy',)
+

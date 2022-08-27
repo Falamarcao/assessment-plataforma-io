@@ -1,0 +1,34 @@
+[
+  {
+    "model": "rooms.room",
+    "pk": 1,
+    "fields": {
+      "name": "Theatre",
+      "capacity": "4"
+    }
+  },
+  {
+    "model": "rooms.room",
+    "pk": 2,
+    "fields": {
+      "name": "Class Room",
+      "capacity": "3"
+    }
+  },
+  {
+    "model": "rooms.room",
+    "pk": 3,
+    "fields": {
+      "name": "Garage",
+      "capacity": "2"
+    }
+  },
+  {
+    "model": "rooms.room",
+    "pk": 4,
+    "fields": {
+      "name": "Little House",
+      "capacity": "1"
+    }
+  }
+]
