@@ -1,13 +1,16 @@
+from os import environ
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase, APIClient
 
 from django.core.management import call_command
+from django.db.models import ProtectedError
 
 from ...users.management.commands import create_groups
 from .utils import json_to_file
 
-record_json = False  # set true to record json files on tests/results directory
+# set true to record json files on tests/results directory
+record_json = int(environ.get("DEBUG", default=0))
 
 
 class RoomAPITest(APITestCase):
@@ -20,7 +23,8 @@ class RoomAPITest(APITestCase):
 
         cls.client = APIClient(SESSION_ID='1')
         cls.api_url = reverse('rooms-list')
-        cls.api_url_events = reverse('events-list')
+        cls.api_detail = 'rooms-detail'
+        cls.api_detail2 = 'events-detail'
 
         cls.staff_username = 'staff'
         cls.password = 'password'
@@ -42,10 +46,12 @@ class RoomAPITest(APITestCase):
         }
         response = self.client.post(self.api_url, data, format='json')
 
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        try:
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        if record_json:
-            json_to_file(response.data, 'test_business_create_room')
+        finally:
+            if record_json:
+                json_to_file(response.data, 'test_business_create_room')
 
     def test_business_delete_room(self):
         """
@@ -58,21 +64,25 @@ class RoomAPITest(APITestCase):
             msg=f'Login as {self.staff_username}'
         )
 
-        data = {'id': 1}
+        data = {'pk': 1}
 
         # Trying to delete a room
-        response = self.client.delete(self.api_url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        msg = "Cannot delete some instances of model \'Room\' " \
+              "because they are referenced through protected foreign keys: \'Event.room\'."
+        try:
+            with self.assertRaisesMessage(ProtectedError, msg):
+                self.client.delete(reverse(self.api_detail, kwargs=data), format='json')
 
-        # Deleting events
-        response = self.client.delete(self.api_url_events, {'id': 1}, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        response = self.client.delete(self.api_url_events, {'id': 5}, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+            # Deleting events
+            response = self.client.delete(reverse(self.api_detail2, kwargs={'pk': 1}), format='json')
+            self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+            response = self.client.delete(reverse(self.api_detail2, kwargs={'pk': 5}), format='json')
+            self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        # Trying again to delete a room after deleting related events
-        response = self.client.delete(self.api_url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+            # Trying again to delete a room after deleting related events
+            response = self.client.delete(reverse(self.api_detail, kwargs=data), format='json')
+            self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
-        if record_json:
-            json_to_file(response.data, 'test_business_delete_room')
+        finally:
+            if record_json:
+                json_to_file(response.data, 'test_business_delete_room')

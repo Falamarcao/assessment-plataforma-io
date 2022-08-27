@@ -28,7 +28,10 @@ class Command(BaseCommand):
             },
             {
                 "name": "customers",
-                "allowed_actions": None
+                "allowed_actions": [
+                    "add_event",
+                    "delete_event"
+                ]
             },
         ]
 

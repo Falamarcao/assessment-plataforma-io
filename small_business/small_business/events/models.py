@@ -1,6 +1,6 @@
 from django.db.models import (Model, DateTimeField, PositiveIntegerField,
                               CharField, ForeignKey, ManyToManyField,
-                              CASCADE, PROTECT)
+                              CASCADE, PROTECT, CheckConstraint, Q, F)
 from django.core.validators import ValidationError
 from ..rooms.models import Room
 from ..users.models import User
@@ -28,7 +28,7 @@ class Event(Model):
     end_at = DateTimeField(blank=False, null=False)
 
     room = ForeignKey(
-        'rooms.Room',
+        Room,
         blank=False,
         null=True,
         on_delete=PROTECT,  # REQ 3: The business can delete a room if said room does not have any events.
@@ -37,7 +37,7 @@ class Event(Model):
 
     event_participants = ManyToManyField(
         User,
-        blank=False,
+        blank=True,
         related_name='event_participants'
     )
 
@@ -46,16 +46,18 @@ class Event(Model):
     def __str__(self):
         return self.name
 
-    # DRF > 3.1 doesn't call the model validation methods, so we are not using clean method here.
     def save(self, *args, **kwargs):
-        self.room.occupancy = self.event_participants.count()
-
-        if self.occupancy > self.room.capacity:
-            raise ValidationError(f"Room full occupancy was reached.")
-
+        if self.event_participants.count() > self.room.capacity:
+            raise ValidationError(f"Room full occupancy was reached.", code=200)
         super(Event, self).save(*args, **kwargs)
 
     class Meta:
         unique_together = (
             ('name', 'room', 'start_at',),  # Rule 7 - A customer cannot book a space twice for the same event.
         )
+        constraints = [
+            CheckConstraint(
+                check=Q(end_at__gt=F('start_at')),  # end_at > start_at
+                name='check_start_date',
+            ),
+        ]

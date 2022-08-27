@@ -16,7 +16,7 @@
 * Docker
 * Nginx (prod)
 * Gunicorn (prod)
-* PostgreSQL or possible others SQL Databases
+* PostgreSQL or possibly others SQL Databases
 * Python
 * Packages:
   * **Django**

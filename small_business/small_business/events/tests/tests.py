@@ -22,8 +22,9 @@ class EventAPITest(APITestCase):
 
         cls.client = APIClient(SESSION_ID='1')
         cls.api_url = reverse('events-list')
+        cls.api_detail = 'events-detail'
 
-        cls.customer_username = 'Paul McCartney'
+        cls.customer_username = 'John Lennon'
         cls.staff_username = 'staff'
         cls.password = 'password'
 
@@ -47,71 +48,141 @@ class EventAPITest(APITestCase):
             'start_at': '2022-01-01T12:20:30+03:00',
             'end_at': '2022-01-01T12:20:30+03:00',
             'room': 2,
-            'event_participants': [2, 3, 4]
         }
         response = self.client.post(self.api_url, data, format='json')
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        if record_json:
-            json_to_file(response.data, 'test_business_create_events')
+    def test_customer_book_place_event(self):
+        """
+        A customer can book a place for an event.
+        """
 
-    # def test_customer_list_public_events(self):
-    #     """
-    #     A customer can see all the available public events.
-    #     """
-    #
-    #     # LOGIN
-    #     self.assertTrue(
-    #         self.client.login(username=self.customer_username, password=self.password),
-    #         msg=f'Login as {self.staff_username}'
-    #     )
-    #
-    #     data = {
-    #         'limit': 1,
-    #         'p': 1
-    #     }
-    #     response = self.client.get(self.api_url, data, format='json')
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data['results']), 1)
-    #
-    #     if record_json:
-    #         json_to_file(response.data, 'test_customer_list_public_events_(limit 1 p1)')
-    #
-    #     data = {
-    #         'limit': 100,
-    #         'p': 1
-    #     }
-    #     response = self.client.get(self.api_url, data, format='json')
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data['results']), 2)
-    #
-    #     if record_json:
-    #         json_to_file(response.data, 'test_customer_list_public_events_(limit 100 p1)')
-    #
-    # def test_customer_list_public_events_by_date_range(self):
-    #     """
-    #     A customer can see all the available public events.
-    #     """
-    #
-    #     # LOGIN
-    #     self.assertTrue(
-    #         self.client.login(username=self.customer_username, password=self.password),
-    #         msg=f'Login as {self.staff_username}'
-    #     )
-    #
-    #     data = {
-    #         'start_at': '2021-02-01',
-    #         'end_at': '2021-02-01'
-    #     }
-    #     response = self.client.get(self.api_url, data, format='json')
-    #
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.assertEqual(len(response.data['results']), 1)
-    #
-    #     if record_json:
-    #         json_to_file(response.data, 'test_customer_list_public_events_by_date_range')
+        # LOGIN
+        self.assertTrue(
+            self.client.login(username=self.customer_username, password=self.password),
+            msg=f'Login as {self.staff_username}'
+        )
+
+        data = {
+            'name': 'Gaming with a Beatle',
+            'description': 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. '
+                           'Aenean commodo ligula eget dolor. Aenean massa. '
+                           'Cum sociis natoque penatibus et ma',
+            'event_type': 'private',
+            'start_at': '2022-12-01T12:20:30+03:00',
+            'end_at': '2022-12-01T12:20:30+03:00',
+            'room': 2,
+        }
+        response = self.client.post(self.api_url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_customer_cancel_booking_event(self):
+        """
+        A customer can cancel its booking for an event.
+        """
+
+        # LOGIN
+        self.assertTrue(
+            self.client.login(username=self.customer_username, password=self.password),
+            msg=f'Login as {self.staff_username}'
+        )
+
+        data = {'pk': 2}
+        response = self.client.delete(reverse(self.api_detail, kwargs=data), format='json')
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        data = {'pk': 1}
+        response = self.client.delete(reverse(self.api_detail, kwargs=data), format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_customer_list_public_events(self):
+        """
+        A customer can see all the available public events.
+        """
+
+        # LOGIN
+        self.assertTrue(
+            self.client.login(username=self.customer_username, password=self.password),
+            msg=f'Login as {self.staff_username}'
+        )
+
+        data = {
+            'limit': 1,
+            'p': 1
+        }
+        response = self.client.get(self.api_url, data, format='json')
+
+        try:
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data['results']), 1)
+
+        finally:
+            if record_json:
+                json_to_file(response.data, 'test_customer_list_public_events_(limit 1 p1)')
+
+        data = {
+            'limit': 100,
+            'p': 1
+        }
+        response = self.client.get(self.api_url, data, format='json')
+
+        try:
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data['results']), 4)
+
+        finally:
+            if record_json:
+                json_to_file(response.data, 'test_customer_list_public_events_(limit 100 p1)')
+
+    def test_customer_list_public_events_by_date_range(self):
+        """
+        A customer can see all the available public events.
+        """
+
+        # LOGIN
+        self.assertTrue(
+            self.client.login(username=self.customer_username, password=self.password),
+            msg=f'Login as {self.staff_username}'
+        )
+
+        data = {
+            'start_at': '2021-03-01',
+            'end_at': '2021-03-01',
+            'limit': 100,
+        }
+        response = self.client.get(self.api_url, data, format='json')
+
+        try:
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data['results']), 1)
+
+        finally:
+            if record_json:
+                json_to_file(response.data, 'test_customer_list_public_events_by_date_range')
+
+    def test_customer_list_public_events_by_start_date(self):
+        """
+        A customer can see all the available public events.
+        """
+
+        # LOGIN
+        self.assertTrue(
+            self.client.login(username=self.customer_username, password=self.password),
+            msg=f'Login as {self.staff_username}'
+        )
+
+        data = {
+            'start_at': '2022-01-01',
+            'limit': 100,
+        }
+        response = self.client.get(self.api_url, data, format='json')
+
+        try:
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(response.data['results']), 1)
+
+        finally:
+            if record_json:
+                json_to_file(response.data, 'test_customer_list_public_events_by_start_date')
 
 
