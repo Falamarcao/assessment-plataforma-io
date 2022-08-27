@@ -184,5 +184,3 @@ class EventAPITest(APITestCase):
         finally:
             if record_json:
                 json_to_file(response.data, 'test_customer_list_public_events_by_start_date')
-
-

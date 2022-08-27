@@ -57,5 +57,3 @@ class EventViewSet(ModelViewSet):
                 return Response("Customers can only cancel their own events.", status.HTTP_401_UNAUTHORIZED)
 
         super(EventViewSet, self).destroy(*args, **kwargs)
-
-

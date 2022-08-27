@@ -13,4 +13,3 @@ class User(AbstractUser):
     but you’ll be able to customize it in the future if the need arises.
     """
     pass
-
