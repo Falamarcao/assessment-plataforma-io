@@ -106,10 +106,17 @@ to run on demand see the commands bellow:
   docker-compose -f docker-compose.prod.yml exec web python manage.py test small_business.rooms small_business.events
   ````
 
-## Help
+## Help: If you have any problem please e-mail me or contact me on LinkedIn.
 
-If you have any problem please e-mail me or contact me on LinkedIn.
 
+### Common issue:
+```
+Use notepad++, go to edit -> EOL conversion -> change from CRLF to LF.
+
+update: For VScode users: you can change CRLF to LF by clicking on CRLF present on lower right side in the status bar
+
+https://stackoverflow.com/questions/51508150/standard-init-linux-go190-exec-user-process-caused-no-such-file-or-directory
+```
 
 ## Author: Marco Maschio
 ### [Linkedin](https://linkedin.com/in/marcoantonioms) | [Resume](https://falamarcao.github.io/resume/)

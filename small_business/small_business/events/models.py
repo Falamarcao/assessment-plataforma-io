@@ -48,7 +48,7 @@ class Event(Model):
 
     def save(self, *args, **kwargs):
         if self.event_participants.count() > self.room.capacity:
-            raise ValidationError(f"Room full occupancy was reached.", code=200)
+            raise ValidationError("Room full occupancy was reached.", code=200)
         super(Event, self).save(*args, **kwargs)
 
     class Meta:

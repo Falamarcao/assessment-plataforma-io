@@ -71,6 +71,4 @@ USER small_business
 # run entrypoint.prod.sh
 ENTRYPOINT ["/home/small_business/web/entrypoint.prod.sh"]
 
-RUN unset DJANGO_SUPERUSER_USERNAME
-RUN unset DJANGO_SUPERUSER_EMAIL
-RUN unset DJANGO_SUPERUSER_PASSWORD
+RUN unset DJANGO_SUPERUSER_USERNAME && unset DJANGO_SUPERUSER_EMAIL && unset DJANGO_SUPERUSER_PASSWORD
